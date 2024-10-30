@@ -68,7 +68,7 @@ def plot_2d_set(dataset: np.ndarray, ax: plt.Axes, loss_fn: Callable) -> None:
 
 
 def contour_2d_set(
-    dataset: np.ndarray, ax: plt.Axes, loss_fn: Callable, linspaces: np.ndarray | None = None
+    dataset: np.ndarray, ax: plt.Axes, loss_fn: Callable, linspaces: np.ndarray = None
 ) -> None:
     dataset_mins = dataset.min(0)
     dataset_maxs = dataset.max(0)
@@ -147,7 +147,7 @@ def plot_gradient_steps_2d(
     loss_fn: Callable,
     num_steps: int = 100,
     learning_rate: float = 1e-2,
-    linspaces: np.ndarray | None = None,
+    linspaces: np.ndarray = None,
 ) -> np.ndarray:
     final_v, final_grad, all_v = gradient_descent_fn(
         grad_fn, dataset, num_steps=num_steps, learning_rate=learning_rate
@@ -274,8 +274,8 @@ def test_pca(
     name: str,
     pca_cls: Type,
     dataset: Dataset,
-    n_components: int | None = None,
-    var_to_explain: float | None = None,
+    n_components: int = None,
+    var_to_explain: float = None,
 ) -> None:
     X = dataset.data
     y = dataset.target
@@ -299,8 +299,8 @@ def test_pca(
 def create_regression_dataset(
     func: Callable,
     sample_size: int = 10,
-    embed_func: Callable | None = None,
-    embed_kwargs: Dict[str, Any] | None = None,
+    embed_func: Callable = None,
+    embed_kwargs: Dict[str, Any] = None,
 ) -> Dataset:
     dataset_X = np.random.uniform(-2.5, 2.5, size=sample_size).reshape(-1, 1)
     dataset_Y_clean = func(dataset_X)
@@ -323,8 +323,8 @@ def plot_regression_results(
     dataset: Dataset,
     regression_cls: Type,
     name: str,
-    embed_func: Callable | None = None,
-    regression_kwargs: Dict[str, Any] | None = None,
+    embed_func: Callable = None,
+    regression_kwargs: Dict[str, Any] = None,
     **embed_kwargs: Any,
 ) -> None:
     if embed_func is None:
@@ -392,7 +392,7 @@ def get_classification_dataset_2d() -> Dataset:
 
 
 def visualize_optimizer(
-    optim: torch.optim.Optimizer, n_steps: int, title: str | None = None, **params: Dict[str, Any]
+    optim: torch.optim.Optimizer, n_steps: int, title: str = None, **params: Dict[str, Any]
 ) -> None:
     def f(w: torch.Tensor) -> torch.Tensor:
         x = torch.tensor([0.2, 2], dtype=torch.float)
@@ -497,7 +497,7 @@ class ModelTrainer:
         return self.logs
 
 
-def load_mnist(train: bool = True, shrinkage: float | None = None) -> torch.utils.data.Dataset:
+def load_mnist(train: bool = True, shrinkage: float = None) -> torch.utils.data.Dataset:
     dataset = torchvision.datasets.MNIST(
         root=".", download=True, train=train, transform=Compose([ToTensor(), Lambda(torch.flatten)])
     )
